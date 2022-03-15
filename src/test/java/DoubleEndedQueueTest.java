@@ -130,14 +130,6 @@ class DoubleEndedQueueTest {
         assertEquals(obtainedValue, expectedValue);
     }
 
-    public static Stream<DequeNode<Integer>> nodeProvider() {
-        return Stream.of(
-                new DequeNode<>(1,new DequeNode<>(2,null,null),null),
-                new DequeNode<>(3, null ,new DequeNode<>(4,null,null)),
-                new DequeNode<>(5,new DequeNode<>(6,null,null), new DequeNode<>(7,null,null))
-        );
-    }
-
     @Test
     public void appendNullNodeThrowsException() {
         Executable lambda = ()->queue.append(null);
@@ -213,15 +205,23 @@ class DoubleEndedQueueTest {
         }
     }
 
+    public static Stream<DequeNode<Integer>> nodeOnListProvider() {
+        return Stream.of(
+                new DequeNode<>(1,new DequeNode<>(2,null,null),null),
+                new DequeNode<>(3, null ,new DequeNode<>(4,null,null)),
+                new DequeNode<>(5,new DequeNode<>(6,null,null), new DequeNode<>(7,null,null))
+        );
+    }
+
     @ParameterizedTest
-    @MethodSource("nodeProvider")
+    @MethodSource("nodeOnListProvider")
     public void appendNodeFromAnotherQueueThrowsException(DequeNode<Integer> node) {
         Executable lambda = ()->queue.append(node);
         assertThrows(IllegalStateException.class,lambda);
     }
 
     @ParameterizedTest
-    @MethodSource("nodeProvider")
+    @MethodSource("nodeOnListProvider")
     public void appendLeftNodeFromAnotherQueueThrowsException(DequeNode<Integer> node) {
         Executable lambda = ()->queue.appendLeft(node);
         assertThrows(IllegalStateException.class,lambda);
