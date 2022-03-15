@@ -1,8 +1,13 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class DoubleEndedQueueTest {
     public DoubleEndedQueue<Integer> queue;
@@ -123,5 +128,102 @@ class DoubleEndedQueueTest {
         int expectedValue = 3;
         int obtainedValue = queue.size();
         assertEquals(obtainedValue, expectedValue);
+    }
+
+    public static Stream<DequeNode<Integer>> nodeProvider() {
+        return Stream.of(
+                new DequeNode<>(1,new DequeNode<>(2,null,null),null),
+                new DequeNode<>(3, null ,new DequeNode<>(4,null,null)),
+                new DequeNode<>(5,new DequeNode<>(6,null,null), new DequeNode<>(7,null,null))
+        );
+    }
+
+    @Test
+    public void appendNullNodeThrowsException() {
+        Executable lambda = ()->queue.append(null);
+        assertThrows(IllegalArgumentException.class,lambda);
+    }
+
+    @Test
+    public void appendLeftNullNodeThrowsException() {
+        Executable lambda = ()->queue.appendLeft(null);
+        assertThrows(IllegalArgumentException.class,lambda);
+    }
+
+    @Test
+    public void appendAnElementTwiceThrowsException() {
+        var node = new DequeNode<>(1,null,null);
+        var exceptionClass = IllegalArgumentException.class;
+        queue.append(node);
+
+        assertAll(
+                ()->assertThrows(exceptionClass,()->queue.append(node)),
+                ()->assertThrows(exceptionClass,()->queue.appendLeft(node))
+        );
+    }
+
+    @Test
+    public void deleteFirstOnEmptyQueueThrowsException() {
+        Executable lambda = ()-> queue.deleteFirst();
+        assertThrows(IllegalStateException.class,lambda);
+    }
+
+    @Test
+    public void deleteLastOnEmptyQueueThrowsException() {
+        Executable lambda = ()-> queue.deleteLast();
+        assertThrows(IllegalStateException.class,lambda);
+    }
+
+   @Test
+   public void sizeOfEmptyQueueShouldReturnZero() {
+        assertEquals(queue.size(),0);
+   }
+
+    @Test
+    public void sizeOfQueueThatHadAllItsElementRemovedShouldReturnZero() {
+        var node1 = new DequeNode<>(1,null,null);
+        var node2 = new DequeNode<>(2,null,null);
+        var node3 = new DequeNode<>(3,null,null);
+
+        queue.append(node1);
+        queue.append(node2);
+        queue.append(node3);
+        queue.deleteLast();
+        queue.deleteLast();
+        queue.deleteLast();
+
+        assertEquals(queue.size(),0);
+    }
+
+    @Test
+    public void removedFirstElementDoesNotHavePreviousNorNextNode() {
+        var node1 = new DequeNode<>(1,null,null);
+        var node2 = new DequeNode<>(2,null,null);
+        var node3 = new DequeNode<>(3,null,null);
+        queue.append(node1);
+        queue.append(node2);
+        queue.append(node3);
+
+        while (queue.size() != 0) {
+            var first = queue.peekFirst();
+            queue.deleteFirst();
+
+            assertNull(first.getNext());
+            assertNull(first.getPrevious());
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("nodeProvider")
+    public void appendNodeFromAnotherQueueThrowsException(DequeNode<Integer> node) {
+        Executable lambda = ()->queue.append(node);
+        assertThrows(IllegalStateException.class,lambda);
+    }
+
+    @ParameterizedTest
+    @MethodSource("nodeProvider")
+    public void appendLeftNodeFromAnotherQueueThrowsException(DequeNode<Integer> node) {
+        Executable lambda = ()->queue.appendLeft(node);
+        assertThrows(IllegalStateException.class,lambda);
     }
 }
