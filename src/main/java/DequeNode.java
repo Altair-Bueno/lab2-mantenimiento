@@ -25,6 +25,8 @@ public class DequeNode<T> {
     }
 
     void setNext(DequeNode<T> next) {
+        if (next == this)
+            throw new IllegalArgumentException("This node and the next one must be different");
         this.next = next;
     }
 
@@ -45,6 +47,8 @@ public class DequeNode<T> {
     }
 
     void setPrevious(DequeNode<T> previous) {
+        if (previous == this)
+            throw new IllegalArgumentException("This node and the previous one must be different");
         this.previous = previous;
     }
 }
