@@ -1,25 +1,26 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DoubleEndedQueueTest {
-    private DoubleEndedQueue<Integer> queue;
+    public DoubleEndedQueue<Integer> queue;
 
     @BeforeEach
-    private void setup() {
+    public void setup() {
          queue = new DoubleLinkedListQueue<>();
     }
 
     @AfterEach
-    private void finish() {
-        queue = null;
+    public void finish() {
+
     }
 
     // DoubleEndedQueue(DequeNode(1), DequeNode(2), DequeNode(3))
     // append(node) -> peekLast() = node
     @Test
-    private void AppendShouldAddNodeAtTheEnd() {
+    public void AppendShouldAddNodeAtTheEnd() {
         DequeNode<Integer> node1 = new DequeNode<>(1, null, null);
         queue.append(node1);
         DequeNode<Integer> node2 = new DequeNode<>(2, null, null);
@@ -35,7 +36,7 @@ class DoubleEndedQueueTest {
     // DoubleEndedQueue(DequeNode(1), DequeNode(2), DequeNode(3))
     // appendLeft(node) -> peekFirst() = node
     @Test
-    private void AppendLeftShouldAddNodeAtTheStart() {
+    public void AppendLeftShouldAddNodeAtTheStart() {
         DequeNode<Integer> node1 = new DequeNode<>(1, null, null);
         queue.append(node1);
         DequeNode<Integer> node2 = new DequeNode<>(2, null, null);
@@ -51,7 +52,7 @@ class DoubleEndedQueueTest {
     // DoubleEndedQueue(DequeNode(1), DequeNode(2), DequeNode(3))
     // deleteFirst() -> peekFirst() = DequeNode(2)
     @Test
-    private void DeleteFirstShouldDeleteNodeAtTheStart() {
+    public void DeleteFirstShouldDeleteNodeAtTheStart() {
         DequeNode<Integer> node1 = new DequeNode<>(1, null, null);
         queue.append(node1);
         DequeNode<Integer> expectedValue = new DequeNode<>(2, null, null);
@@ -68,7 +69,7 @@ class DoubleEndedQueueTest {
     // DoubleEndedQueue(DequeNode(1), DequeNode(2), DequeNode(3))
     // deleteLast() -> peekLast() = DequeNode(2)
     @Test
-    private void DeleteLastShouldDeleteNodeAtTheEnd() {
+    public void DeleteLastShouldDeleteNodeAtTheEnd() {
         DequeNode<Integer> node1 = new DequeNode<>(1, null, null);
         queue.append(node1);
         DequeNode<Integer> expectedValue = new DequeNode<>(2, null, null);
@@ -85,7 +86,7 @@ class DoubleEndedQueueTest {
     // DoubleEndedQueue(DequeNode(1), DequeNode(2))
     // peekFirst() -> DequeNode(1)
     @Test
-    private void peekFirstShouldReturnNodeAtTheStart() {
+    public void peekFirstShouldReturnNodeAtTheStart() {
         DequeNode<Integer> expectedValue = new DequeNode<>(1, null, null);
         queue.append(expectedValue);
         DequeNode<Integer> node2 = new DequeNode<>(2, null, null);
@@ -98,7 +99,7 @@ class DoubleEndedQueueTest {
     // DoubleEndedQueue(DequeNode(1), DequeNode(2))
     // peekLast() -> DequeNode(2)
     @Test
-    private void peekLastShouldReturnNodeAtTheEnd() {
+    public void peekLastShouldReturnNodeAtTheEnd() {
         DequeNode<Integer> node1 = new DequeNode<>(1, null, null);
         queue.append(node1);
         DequeNode<Integer> expectedValue = new DequeNode<>(2, null, null);
@@ -111,7 +112,7 @@ class DoubleEndedQueueTest {
     // DoubleEndedQueue(DequeNode(1), DequeNode(2))
     // peekLast() -> DequeNode(2)
     @Test
-    private void sizeOfQueueWithThreeNodesShouldReturnThree() {
+    public void sizeOfQueueWithThreeNodesShouldReturnThree() {
         DequeNode<Integer> node1 = new DequeNode<>(1, null, null);
         queue.append(node1);
         DequeNode<Integer> node2 = new DequeNode<>(2, null, null);
