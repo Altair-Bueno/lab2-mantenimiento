@@ -1,0 +1,31 @@
+class DequeNodeTest:
+
+1. getItemReturnsTheItemAttributeValue
+2. getNextReturnsTheNextNode
+3. getNextReturnsNullIfNodeHasNoNextNode
+4. getPreviousReturnsThePreviousNode
+5. getPreviousReturnsNullIfNodeHasNoPreviousNode
+6. setNextModifiesTheNextNode
+7. setNextOfItselfThrowsAnException
+8. setPreviousModifiesThePreviousNode
+9. setPreviousOfItselfThrowsExceptions
+10. isFirstNodeReturnsTrueIfPreviousAttributeIsNull
+11. isFirstNodeReturnsFalseIfPreviousAttributeIsNotNull
+12. isLastNodeReturnsTrueIfNextAttributeIsNull
+13. isLastNodeReturnsFalseIfNextAttributeIsNotNull
+14. isNotATerminalNodeReturnsFalseIfNextAndPreviousAttributesAreNull
+15. isNotATerminalNodeReturnsTrueIfNextAttributeIsNotNull
+16. isNotATerminalNodeReturnsTrueIfPreviousAttributeIsNotNull
+17. isNotATerminalNodeReturnsTrueIfPreviousAndNextAttributesAreNotNull
+
+class DoubleEndedQueueTest
+
+1. AppendShouldAddNodeAtTheEnd
+2. AppendLeftShouldAddNodeAtTheStart
+3. DeleteFirstShouldDeleteNodeAtTheStart
+4. DeleteLastShouldDeleteNodeAtTheEnd
+5. peekFirstShouldReturnNodeAtTheStart
+6. peekLastShouldReturnNodeAtTheEnd
+7. sizeOfQueueWithThreeNodesShouldReturnThree
+
+
