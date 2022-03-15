@@ -22,14 +22,14 @@ class DoubleEndedQueueTest {
     @Test
     public void AppendShouldAddNodeAtTheEnd() {
         DequeNode<Integer> node1 = new DequeNode<>(1, null, null);
-        queue.append(node1);
         DequeNode<Integer> node2 = new DequeNode<>(2, null, null);
-        queue.append(node2);
-
         DequeNode<Integer> expectedValue = new DequeNode<>(3, null, null);
+
+        queue.append(node1);
+        queue.append(node2);
+        queue.append(expectedValue);
         DequeNode<Integer> obtainedValue = queue.peekLast();
 
-        queue.append(expectedValue);
         assertEquals(obtainedValue, expectedValue);
     }
 
@@ -38,14 +38,14 @@ class DoubleEndedQueueTest {
     @Test
     public void AppendLeftShouldAddNodeAtTheStart() {
         DequeNode<Integer> node1 = new DequeNode<>(1, null, null);
-        queue.append(node1);
         DequeNode<Integer> node2 = new DequeNode<>(2, null, null);
-        queue.append(node2);
-
         DequeNode<Integer> expectedValue = new DequeNode<>(3, null, null);
+
+        queue.append(node1);
+        queue.append(node2);
+        queue.appendLeft(expectedValue);
         DequeNode<Integer> obtainedValue = queue.peekFirst();
 
-        queue.appendLeft(expectedValue);
         assertEquals(obtainedValue, expectedValue);
     }
 
