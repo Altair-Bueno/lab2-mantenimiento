@@ -14,7 +14,7 @@ class DoubleEndedQueueTest {
 
     @AfterEach
     public void finish() {
-
+        queue = null;
     }
 
     // DoubleEndedQueue(DequeNode(1), DequeNode(2), DequeNode(3))
