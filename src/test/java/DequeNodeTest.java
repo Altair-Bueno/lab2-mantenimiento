@@ -78,7 +78,7 @@ class DequeNodeTest {
 
     // setNext() throws IllegalArgumentException
     @Test
-    public void setNext(){
+    public void setNextOfItselfThrowsAnException(){
         dequeNode = new DequeNode<>(1,null,null);
 
         assertThrows(IllegalArgumentException.class,()->dequeNode.setNext(dequeNode));
@@ -98,7 +98,7 @@ class DequeNodeTest {
 
     // setPrevious() throws IllegalArgumentException
     @Test
-    public void setPrevious(){
+    public void setPreviousOfItselfThrowsExceptions(){
         dequeNode = new DequeNode<>(1,null,null);
 
         assertThrows(IllegalArgumentException.class,()->dequeNode.setPrevious(dequeNode));
