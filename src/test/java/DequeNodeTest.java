@@ -147,6 +147,7 @@ class DequeNodeTest {
     }
 
     // isNotATerminalNode() -> false
+    @Test
     public void isNotATerminalNodeReturnsFalseIfNextAndPreviousAttributesAreNull(){
         dequeNode = new DequeNode<>(1,null,null);
         boolean expectedValue = false;
@@ -157,6 +158,7 @@ class DequeNodeTest {
 
 
     // isNotATerminalNode() -> true
+    @Test
     public void isNotATerminalNodeReturnsTrueIfNextAttributeIsNotNull() {
         boolean expectedValue = false;
         DequeNode<Integer> next = new DequeNode<>(3, null, null);
@@ -167,6 +169,7 @@ class DequeNodeTest {
     }
 
     // isNotATerminalNode() -> true
+    @Test
     public void isNotATerminalNodeReturnsTrueIfPreviousAttributeIsNotNull() {
         boolean expectedValue = false;
         DequeNode<Integer> previous = new DequeNode<>(1, null, null);
@@ -177,8 +180,9 @@ class DequeNodeTest {
     }
 
     // isNotATerminalNode() -> true
+    @Test
     public void isNotATerminalNodeReturnsTrueIfPreviousAndNextAttributesAreNotNull(){
-        boolean expectedValue = false;
+        boolean expectedValue = true;
         DequeNode<Integer> next = new DequeNode<>(3, null, null);
         DequeNode<Integer> previous = new DequeNode<>(1, null, null);
         dequeNode = new DequeNode<>(2, next, previous);
