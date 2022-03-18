@@ -27,5 +27,15 @@ class DoubleEndedQueueTest
 5. peekFirstShouldReturnNodeAtTheStart
 6. peekLastShouldReturnNodeAtTheEnd
 7. sizeOfQueueWithThreeNodesShouldReturnThree
+8. appendNullNodeThrowsException
+9. appendLeftNullNodeThrowsException
+10. appendAnElementTwiceThrowsException
+11. deleteFirstOnEmptyQueueThrowsException
+12. deleteLastOnEmptyQueueThrowsException
+13. sizeOfEmptyQueueShouldReturnZero
+14. sizeOfQueueThatHadAllItsElementRemovedShouldReturnZero
+15. removedFirstElementDoesNotHavePreviousNorNextNode
+16. appendNodeFromAnotherQueueThrowsException
+17. appendLeftNodeFromAnotherQueueThrowsException
 
 
