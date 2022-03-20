@@ -123,4 +123,15 @@ class DoubleEndedQueueTest {
         int obtainedValue = queue.size();
         assertEquals(obtainedValue, expectedValue);
     }
+
+    // DoubleEndedQueue(DequeNode(1))
+    // peekLast() -> DequeNode(1)
+    @Test
+    public void appendLeftOnEmptyQueueMakesItemTheLast() {
+        var expectedValue = new DequeNode<>(1,null,null);
+        queue.appendLeft(expectedValue);
+        var obtainedValue = queue.peekLast();
+
+        assertEquals(expectedValue, obtainedValue);
+    }
 }
