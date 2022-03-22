@@ -393,6 +393,50 @@ class DoubleEndedQueueTest {
                 }
         );
     }
+
+    // DoubleEndedQueue(DequeNode(1),DequeNode(2),DequeNode(3))
+    // queue.delete(DequeNode(2)) -> queue.size == 2
+    @Test
+    public void deleteMiddleElement() {
+        var first = new DequeNode<>(1,null,null);
+        var second = new DequeNode<>(2,null,null);
+        var third = new DequeNode<>(3,null,null);
+        queue.append(first);
+        queue.append(second);
+        queue.append(third);
+
+        queue.delete(second);
+        var expected = 2;
+        var obtained = queue.size();
+
+        assertEquals(expected,obtained);
+    }
+
+    // DoubleEndedQueue(DequeNode(1),DequeNode(2),DequeNode(3))
+    // queue.delete(DequeNode(2)) -> node2.next == null and node2.previous == null
+    @Test
+    public void deleteShouldSetPreviousAndNextToNull() {
+        var first = new DequeNode<>(1,null,null);
+        var second = new DequeNode<>(2,null,null);
+        var third = new DequeNode<>(3,null,null);
+        queue.append(first);
+        queue.append(second);
+        queue.append(third);
+
+        queue.delete(second);
+
+        assertAll(
+                ()->{
+                    var obtained = second.getPrevious();
+                    assertNull(obtained);
+                },
+                ()->{
+                    var obtained = second.getNext();
+                    assertNull(obtained);
+                }
+        );
+    }
+
     // DoubleEndedQueue(DequeNode(1))
     // find(1) -> DequeNode(1)
     @Test
