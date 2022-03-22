@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
 
     private DequeNode<T> first = null;
@@ -94,5 +96,25 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
     @Override
     public int size() {
         return this.size;
+    }
+
+    @Override
+    public DequeNode<T> getAt(int position) {
+        return null;
+    }
+
+    @Override
+    public DequeNode<T> find(T item) {
+        return null;
+    }
+
+    @Override
+    public void delete(DequeNode<T> node) {
+
+    }
+
+    @Override
+    public void sort(Comparator<?> comparator) {
+
     }
 }
