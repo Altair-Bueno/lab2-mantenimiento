@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -321,6 +322,49 @@ class DoubleEndedQueueTest {
                 ()-> {
                     var obtained = queue.getAt(2);
                     assertEquals(third,obtained);
+                }
+        );
+    }
+
+    @Test
+    public void deleteWithNullNode() {
+        var expectedException = IllegalArgumentException.class;
+        Executable lambda = () -> queue.delete(null);
+
+        assertThrows(expectedException,lambda);
+    }
+
+    @ParameterizedTest
+    @MethodSource("nodeOnListProvider")
+    void deleteNodeFromOtherList (DequeNode<Integer> node) {
+        queue.append(new DequeNode<>(1,null,null));
+        queue.append(new DequeNode<>(2,null,null));
+
+        var expectedException = NoSuchElementException.class;
+        Executable lambda = ()-> queue.delete(node);
+
+        assertThrows(expectedException,lambda);
+    }
+
+    @Test
+    public void deleteRemovesElement() {
+        var one = 1;
+        var first = new DequeNode<>(one,null,null);
+        queue.append(first);
+
+        queue.delete(first);
+
+        assertAll(
+                ()-> {
+                    var obtained = queue.find(one);
+
+                    assertNull(obtained);
+                },
+                ()->{
+                    var obtained = queue.size();
+                    var expected = 0;
+
+                    assertEquals(expected,obtained);
                 }
         );
     }
