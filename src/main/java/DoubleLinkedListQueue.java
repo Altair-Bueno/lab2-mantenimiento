@@ -6,9 +6,6 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
     private DequeNode<T> first = null;
     private DequeNode<T> last = null;
     private int size = 0;
-
-    public DoubleLinkedListQueue() {}
-
     @Override
     public void append(DequeNode<T> node) {
         if (node == null) throw new IllegalArgumentException("Argument `node` cannot be null");
