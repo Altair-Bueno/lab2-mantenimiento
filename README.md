@@ -133,4 +133,6 @@ pantalla que se estimen oportunas.
 
 ## Coverage
 
-![Coverage](.github/resources/coverage.png)
+![Coverage DequeNode](.github/resources/coverage1.png)
+
+![Coverage DoubleLinkedListQueue](.github/resources/coverage2.png)
