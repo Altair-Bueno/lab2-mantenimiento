@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -237,5 +238,70 @@ class DoubleEndedQueueTest {
         Executable lambda = ()->queue.appendLeft(node);
         assertThrows(IllegalStateException.class,lambda);
     }
+    @Test
+    public void getAtNegativeIndex() {
+        var index = -1;
 
+        var obtainedValue = queue.getAt(index);
+
+        assertNull(obtainedValue);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = { 0, 1, 2, 3, 4, 5, 50 })
+    public void getAtWithEmptyList(int index) {
+        var obtainedValue = queue.getAt(index);
+
+        assertNull(obtainedValue);
+    }
+
+    @Test
+    public void getAtFirstEqualsPeekFirst() {
+        queue.append(new DequeNode<>(1,null,null));
+        queue.append(new DequeNode<>(2,null,null));
+        queue.append(new DequeNode<>(3,null,null));
+
+        var expected = queue.peekFirst();
+        var obtained = queue.getAt(0);
+
+        assertEquals(expected,obtained);
+    }
+
+    @Test
+    public void getAtLastEqualsPeekLast() {
+        queue.append(new DequeNode<>(1,null,null));
+        queue.append(new DequeNode<>(2,null,null));
+        queue.append(new DequeNode<>(3,null,null));
+
+        var expected = queue.peekLast();
+        var obtained = queue.getAt(2);
+
+        assertEquals(expected,obtained);
+    }
+
+    @Test
+    public void getAtInOrder() {
+        var first = new DequeNode<>(1,null,null);
+        var second = new DequeNode<>(2,null,null);
+        var third = new DequeNode<>(3,null,null);
+
+        queue.append(first);
+        queue.append(second);
+        queue.append(third);
+
+        assertAll(
+                ()-> {
+                    var obtained = queue.getAt(0);
+                    assertEquals(first,obtained);
+                },
+                ()-> {
+                    var obtained = queue.getAt(2);
+                    assertEquals(second,obtained);
+                },
+                ()-> {
+                    var obtained = queue.getAt(2);
+                    assertEquals(third,obtained);
+                }
+        );
+    }
 }
