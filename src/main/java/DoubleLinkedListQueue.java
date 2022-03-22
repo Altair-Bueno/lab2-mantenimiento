@@ -119,7 +119,13 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
 
     @Override
     public DequeNode<T> find(T item) {
-        return null;
+        if (item == null)
+            throw new IllegalArgumentException("Cannot find null nodes on DoubleLinkedListQueue");
+
+        DequeNode<T> aux = this.peekFirst();
+        while (aux != null && item != aux)
+            aux = aux.getNext();
+        return aux;
     }
 
     @Override
