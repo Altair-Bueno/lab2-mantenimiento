@@ -37,5 +37,20 @@ class DoubleEndedQueueTest
 15. removedFirstElementDoesNotHavePreviousNorNextNode
 16. appendNodeFromAnotherQueueThrowsException
 17. appendLeftNodeFromAnotherQueueThrowsException
-
-
+18. getAtNegativeIndex
+19. getAtWithEmptyList
+20. getAtFirstEqualsPeekFirst
+21. getAtLastEqualsPeekLast
+22. getAtInOrder
+23. deleteWithNullNode
+24. deleteNodeFromOtherList
+25. deleteRemovesElement
+26. deleteMiddleElement
+27. deleteShouldSetPreviousAndNextToNull
+28. findShouldReturnTheNodeWithTheGivenItem
+29. findOfAnItemThatIsNotInTheQueueShouldReturnNull
+30. findANullShouldRaiseAnException
+31. sortOfADisorderedQueueShouldOrderIt
+32. sortOfAnOrderedQueueShouldDoNothing
+33. sortOfAnEmptyQueueShouldDoNothing
+34. sortShouldRaiseAnExceptionIfTheParameterIsNull
