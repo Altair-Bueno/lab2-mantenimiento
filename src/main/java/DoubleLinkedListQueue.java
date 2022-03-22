@@ -144,6 +144,8 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
         }
         if (actual != null && previous != null) {
             previous.setNext(actual.getNext());
+            actual.setNext(null);
+            actual.setPrevious(null);
             this.size--;
         } else if (actual != null) {
             first = null;
