@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.beans.Expression;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
@@ -456,5 +457,13 @@ class DoubleEndedQueueTest {
     public void sortOfAnEmptyQueueShouldDoNothing(){
         queue.sort(comparator);
         assertEquals(0,queue.size());
+    }
+
+    // DoubleEndedQueue()
+    // sort(null) -> IllegalArgumentException
+    @Test
+    public void sortShouldRaiseAnExceptionIfTheParameterIsNull(){
+        Executable lambda = ()->queue.sort(null);
+        assertThrows(IllegalArgumentException.class,lambda);
     }
 }
