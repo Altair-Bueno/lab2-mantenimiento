@@ -14,5 +14,5 @@ public interface DoubleEndedQueue<T> {
     DequeNode<T> getAt(int position) ;
     DequeNode<T> find (T item) ;
     void delete(DequeNode<T> node) ;
-    void sort(Comparator<?> comparator) ;
+    void sort(Comparator<DequeNode<T>> comparator) ;
 }

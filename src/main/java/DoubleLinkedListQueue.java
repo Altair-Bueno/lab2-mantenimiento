@@ -1,4 +1,5 @@
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
 
@@ -130,11 +131,42 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
 
     @Override
     public void delete(DequeNode<T> node) {
+        if (node == null)
+            throw new IllegalArgumentException("Cannot delete a null node on DoubleLinkedListQueue");
 
+        DequeNode<T> actual = this.peekFirst();
+        DequeNode<T> previous = null;
+        while (actual != null && node != actual) {
+            previous = actual;
+            actual = actual.getNext();
+        }
+        if (actual != null && previous != null) {
+            previous.setNext(actual.getNext());
+        } else {
+            throw new NoSuchElementException("Node " + node + " does not exists on the DoubleLinkedListQueue");
+        }
     }
 
     @Override
-    public void sort(Comparator<?> comparator) {
+    public void sort(Comparator<DequeNode<T>> comparator) {
+        if (comparator == null)
+            throw new IllegalArgumentException("Comparator cannot be null");
 
+        if (this.size() > 0) {
+            DoubleLinkedListQueue<T> result = new DoubleLinkedListQueue<>();
+            while (this.size() != 0) {
+                DequeNode<T> actual = this.peekFirst();
+                this.deleteFirst();
+                if (result.size() != 0) {
+                    if (comparator.compare(actual, result.peekFirst()) > 0) {
+                        result.appendLeft(actual);
+                    } else {
+                        result.append(actual);
+                    }
+                } else {
+                    result.append(actual);
+                }
+            }
+        }
     }
 }
