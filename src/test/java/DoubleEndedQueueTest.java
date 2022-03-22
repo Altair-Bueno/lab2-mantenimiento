@@ -142,18 +142,23 @@ class DoubleEndedQueueTest {
         assertEquals(expectedValue, obtainedValue);
     }
 
+    // append(null) -> IllegalArgumentException
     @Test
     public void appendNullNodeThrowsException() {
         Executable lambda = ()->queue.append(null);
         assertThrows(IllegalArgumentException.class,lambda);
     }
 
+    // appendLeft(null) -> IllegalArgumentException
     @Test
     public void appendLeftNullNodeThrowsException() {
         Executable lambda = ()->queue.appendLeft(null);
         assertThrows(IllegalArgumentException.class,lambda);
     }
 
+    // DoubleEndedQueue(DequeNode(1))
+    // append(node) -> IllegalArgumentException
+    // appendLeft(node) -> IllegalArgumentException
     @Test
     public void appendAnElementTwiceThrowsException() {
         var node = new DequeNode<>(1,null,null);
@@ -166,23 +171,31 @@ class DoubleEndedQueueTest {
         );
     }
 
+    // DoubleEndedQueue()
+    // deleteFirst() -> IllegalStateException
     @Test
     public void deleteFirstOnEmptyQueueThrowsException() {
         Executable lambda = ()-> queue.deleteFirst();
         assertThrows(IllegalStateException.class,lambda);
     }
 
+    // DoubleEndedQueue()
+    // deleteLast() -> IllegalStateException
     @Test
     public void deleteLastOnEmptyQueueThrowsException() {
         Executable lambda = ()-> queue.deleteLast();
         assertThrows(IllegalStateException.class,lambda);
     }
 
+    // DoubleEndedQueue()
+    // size() -> 0
    @Test
    public void sizeOfEmptyQueueShouldReturnZero() {
         assertEquals(queue.size(),0);
    }
 
+    // DoubleEndedQueue(DequeNode(1),DequeNode(2),DequeNode(3))
+    // deleteLast() -> deleteLast() -> deleteLast() -> size() = 0
     @Test
     public void sizeOfQueueThatHadAllItsElementRemovedShouldReturnZero() {
         var node1 = new DequeNode<>(1,null,null);
@@ -199,6 +212,9 @@ class DoubleEndedQueueTest {
         assertEquals(queue.size(),0);
     }
 
+    // DoubleEndedQueue(DequeNode(1),DequeNode(2),DequeNode(3))
+    // peekFirst() -> deleteFirst() -> first.getNext() = null
+    // peekFirst() -> deleteFirst() -> first.getPrevious() = null
     @Test
     public void removedFirstElementDoesNotHavePreviousNorNextNode() {
         var node1 = new DequeNode<>(1,null,null);
@@ -225,6 +241,8 @@ class DoubleEndedQueueTest {
         );
     }
 
+    // DoubleEndedQueue(node) and DoubleEndedQueue(queue)
+    // queue.append(note) -> IllegalStateException
     @ParameterizedTest
     @MethodSource("nodeOnListProvider")
     public void appendNodeFromAnotherQueueThrowsException(DequeNode<Integer> node) {
@@ -232,6 +250,8 @@ class DoubleEndedQueueTest {
         assertThrows(IllegalStateException.class,lambda);
     }
 
+    // DoubleEndedQueue(node) and DoubleEndedQueue(queue)
+    // queue.appendLeft(note) -> IllegalStateException
     @ParameterizedTest
     @MethodSource("nodeOnListProvider")
     public void appendLeftNodeFromAnotherQueueThrowsException(DequeNode<Integer> node) {
