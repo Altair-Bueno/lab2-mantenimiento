@@ -130,6 +130,17 @@ class DoubleEndedQueueTest {
         assertEquals(obtainedValue, expectedValue);
     }
 
+    // DoubleEndedQueue(DequeNode(1))
+    // peekLast() -> DequeNode(1)
+    @Test
+    public void appendLeftOnEmptyQueueMakesItemTheLast() {
+        var expectedValue = new DequeNode<>(1,null,null);
+        queue.appendLeft(expectedValue);
+        var obtainedValue = queue.peekLast();
+
+        assertEquals(expectedValue, obtainedValue);
+    }
+
     @Test
     public void appendNullNodeThrowsException() {
         Executable lambda = ()->queue.append(null);
@@ -226,4 +237,5 @@ class DoubleEndedQueueTest {
         Executable lambda = ()->queue.appendLeft(node);
         assertThrows(IllegalStateException.class,lambda);
     }
+
 }
