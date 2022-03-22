@@ -100,7 +100,21 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
 
     @Override
     public DequeNode<T> getAt(int position) {
-        return null;
+        DequeNode<T> result = null;
+        if (position < 0)
+            throw new IllegalArgumentException("Index" + position + " does not exist");
+        else if (position < this.size()) {
+            DequeNode<T> aux = this.peekFirst();
+            int counter = 0;
+            while(aux != null && result == null) {
+                if (counter == position) {
+                    result = aux;
+                } else {
+                    aux = aux.getNext();
+                }
+            }
+        }
+        return result;
     }
 
     @Override
