@@ -14,12 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DoubleEndedQueueTest {
     public DoubleEndedQueue<Integer> queue;
-    private Comparator<DequeNode<Integer>> comparator = new Comparator<DequeNode<Integer>>() {
-        @Override
-        public int compare(DequeNode<Integer> o1, DequeNode<Integer> o2) {
-            return o1.getItem()-o2.getItem();
-        }
-    };
+    private final Comparator<DequeNode<Integer>> comparator = Comparator.comparingInt(DequeNode::getItem);
 
     @BeforeEach
     public void setup() {
@@ -272,9 +267,7 @@ class DoubleEndedQueueTest {
     public void getAtNegativeIndex() {
         var index = -1;
 
-        var obtainedValue = queue.getAt(index);
-
-        assertNull(obtainedValue);
+        assertThrows(IllegalArgumentException.class, () -> queue.getAt(index));
     }
 
     // DoubleEndedQueue()
@@ -335,7 +328,7 @@ class DoubleEndedQueueTest {
                     assertEquals(first,obtained);
                 },
                 ()-> {
-                    var obtained = queue.getAt(2);
+                    var obtained = queue.getAt(1);
                     assertEquals(second,obtained);
                 },
                 ()-> {
@@ -430,8 +423,8 @@ class DoubleEndedQueueTest {
         queue.append(node3);
 
         queue.sort(comparator);
-        assertEquals(node3,queue.peekFirst());
-        assertEquals(node2,queue.peekLast());
+        assertEquals(node2,queue.peekFirst());
+        assertEquals(node3,queue.peekLast());
     }
 
     // DoubleEndedQueue(DequeNode(1),DequeNode(2),DequeNode(3))
@@ -446,8 +439,8 @@ class DoubleEndedQueueTest {
         queue.append(node3);
 
         queue.sort(comparator);
-        assertEquals(node1,queue.peekFirst());
-        assertEquals(node3,queue.peekLast());
+        assertEquals(node3,queue.peekFirst());
+        assertEquals(node1,queue.peekLast());
     }
 
     // DoubleEndedQueue()

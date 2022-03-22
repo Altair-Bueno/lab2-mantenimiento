@@ -101,10 +101,11 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
 
     @Override
     public DequeNode<T> getAt(int position) {
-        DequeNode<T> result = null;
         if (position < 0)
-            throw new IllegalArgumentException("Index" + position + " does not exist");
-        else if (position < this.size()) {
+            throw new IllegalArgumentException("Index " + position + " does not exist");
+
+        DequeNode<T> result = null;
+        if (position < this.size()) {
             DequeNode<T> aux = this.peekFirst();
             int counter = 0;
             while(aux != null && result == null) {
@@ -112,6 +113,7 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
                     result = aux;
                 } else {
                     aux = aux.getNext();
+                    counter++;
                 }
             }
         }
@@ -124,7 +126,7 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
             throw new IllegalArgumentException("Cannot find null nodes on DoubleLinkedListQueue");
 
         DequeNode<T> aux = this.peekFirst();
-        while (aux != null && item != aux)
+        while (aux != null && !item.equals(aux.getItem()))
             aux = aux.getNext();
         return aux;
     }
@@ -142,6 +144,11 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
         }
         if (actual != null && previous != null) {
             previous.setNext(actual.getNext());
+            this.size--;
+        } else if (actual != null) {
+            first = null;
+            last = null;
+            this.size = 0;
         } else {
             throw new NoSuchElementException("Node " + node + " does not exists on the DoubleLinkedListQueue");
         }
@@ -167,6 +174,8 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
                     result.append(actual);
                 }
             }
+            this.first = result.peekFirst();
+            this.last = result.peekLast();
         }
     }
 }
