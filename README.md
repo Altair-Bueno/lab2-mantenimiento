@@ -134,3 +134,8 @@ pantalla que se estimen oportunas.
 ## Coverage
 
 ![Coverage](.github/resources/coverage.png)
+
+
+## Test results
+
+![Test results](.github/resources/test.png)
