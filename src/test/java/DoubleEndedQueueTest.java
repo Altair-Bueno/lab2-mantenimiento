@@ -259,6 +259,8 @@ class DoubleEndedQueueTest {
         Executable lambda = ()->queue.appendLeft(node);
         assertThrows(IllegalStateException.class,lambda);
     }
+    // DoubleEndedQueue()
+    // queue.getAt(-1) -> null
     @Test
     public void getAtNegativeIndex() {
         var index = -1;
@@ -268,6 +270,8 @@ class DoubleEndedQueueTest {
         assertNull(obtainedValue);
     }
 
+    // DoubleEndedQueue()
+    // queue.getAt(index) -> null
     @ParameterizedTest
     @ValueSource(ints = { 0, 1, 2, 3, 4, 5, 50 })
     public void getAtWithEmptyList(int index) {
@@ -276,6 +280,8 @@ class DoubleEndedQueueTest {
         assertNull(obtainedValue);
     }
 
+    // DoubleEndedQueue(DequeNode(1),DequeNode(2),DequeNode(3))
+    // queue.peekFirst() == queue.getAt(0)
     @Test
     public void getAtFirstEqualsPeekFirst() {
         queue.append(new DequeNode<>(1,null,null));
@@ -288,6 +294,8 @@ class DoubleEndedQueueTest {
         assertEquals(expected,obtained);
     }
 
+    // DoubleEndedQueue(DequeNode(1),DequeNode(2),DequeNode(3))
+    // queue.peekFirst() == queue.getAt(2)
     @Test
     public void getAtLastEqualsPeekLast() {
         queue.append(new DequeNode<>(1,null,null));
@@ -300,6 +308,10 @@ class DoubleEndedQueueTest {
         assertEquals(expected,obtained);
     }
 
+    // DoubleEndedQueue(DequeNode(1),DequeNode(2),DequeNode(3))
+    // queue.getAt(0) == DequeNode(1)
+    // queue.getAt(1) == DequeNode(2)
+    // queue.getAt(2) == DequeNode(3)
     @Test
     public void getAtInOrder() {
         var first = new DequeNode<>(1,null,null);
@@ -326,6 +338,8 @@ class DoubleEndedQueueTest {
         );
     }
 
+    // DoubleEndedQueue()
+    // queue.delete(null) -> IllegalArgumentException
     @Test
     public void deleteWithNullNode() {
         var expectedException = IllegalArgumentException.class;
@@ -334,6 +348,8 @@ class DoubleEndedQueueTest {
         assertThrows(expectedException,lambda);
     }
 
+    // DoubleEndedQueue(DequeNode(1),DequeNode(2)), DequeNode(3)
+    // queue.delete(DequeNode(3)) -> NoSuchElementException
     @ParameterizedTest
     @MethodSource("nodeOnListProvider")
     void deleteNodeFromOtherList (DequeNode<Integer> node) {
@@ -346,6 +362,8 @@ class DoubleEndedQueueTest {
         assertThrows(expectedException,lambda);
     }
 
+    // DoubleEndedQueue(DequeNode(1))
+    // queue.delete(DequeNode(1)) -> queue.size == 0
     @Test
     public void deleteRemovesElement() {
         var one = 1;
