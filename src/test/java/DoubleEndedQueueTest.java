@@ -4,8 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -264,7 +266,133 @@ class DoubleEndedQueueTest {
         Executable lambda = ()->queue.appendLeft(node);
         assertThrows(IllegalStateException.class,lambda);
     }
+    // DoubleEndedQueue()
+    // queue.getAt(-1) -> null
+    @Test
+    public void getAtNegativeIndex() {
+        var index = -1;
 
+        var obtainedValue = queue.getAt(index);
+
+        assertNull(obtainedValue);
+    }
+
+    // DoubleEndedQueue()
+    // queue.getAt(index) -> null
+    @ParameterizedTest
+    @ValueSource(ints = { 0, 1, 2, 3, 4, 5, 50 })
+    public void getAtWithEmptyList(int index) {
+        var obtainedValue = queue.getAt(index);
+
+        assertNull(obtainedValue);
+    }
+
+    // DoubleEndedQueue(DequeNode(1),DequeNode(2),DequeNode(3))
+    // queue.peekFirst() == queue.getAt(0)
+    @Test
+    public void getAtFirstEqualsPeekFirst() {
+        queue.append(new DequeNode<>(1,null,null));
+        queue.append(new DequeNode<>(2,null,null));
+        queue.append(new DequeNode<>(3,null,null));
+
+        var expected = queue.peekFirst();
+        var obtained = queue.getAt(0);
+
+        assertEquals(expected,obtained);
+    }
+
+    // DoubleEndedQueue(DequeNode(1),DequeNode(2),DequeNode(3))
+    // queue.peekFirst() == queue.getAt(2)
+    @Test
+    public void getAtLastEqualsPeekLast() {
+        queue.append(new DequeNode<>(1,null,null));
+        queue.append(new DequeNode<>(2,null,null));
+        queue.append(new DequeNode<>(3,null,null));
+
+        var expected = queue.peekLast();
+        var obtained = queue.getAt(2);
+
+        assertEquals(expected,obtained);
+    }
+
+    // DoubleEndedQueue(DequeNode(1),DequeNode(2),DequeNode(3))
+    // queue.getAt(0) == DequeNode(1)
+    // queue.getAt(1) == DequeNode(2)
+    // queue.getAt(2) == DequeNode(3)
+    @Test
+    public void getAtInOrder() {
+        var first = new DequeNode<>(1,null,null);
+        var second = new DequeNode<>(2,null,null);
+        var third = new DequeNode<>(3,null,null);
+
+        queue.append(first);
+        queue.append(second);
+        queue.append(third);
+
+        assertAll(
+                ()-> {
+                    var obtained = queue.getAt(0);
+                    assertEquals(first,obtained);
+                },
+                ()-> {
+                    var obtained = queue.getAt(2);
+                    assertEquals(second,obtained);
+                },
+                ()-> {
+                    var obtained = queue.getAt(2);
+                    assertEquals(third,obtained);
+                }
+        );
+    }
+
+    // DoubleEndedQueue()
+    // queue.delete(null) -> IllegalArgumentException
+    @Test
+    public void deleteWithNullNode() {
+        var expectedException = IllegalArgumentException.class;
+        Executable lambda = () -> queue.delete(null);
+
+        assertThrows(expectedException,lambda);
+    }
+
+    // DoubleEndedQueue(DequeNode(1),DequeNode(2)), DequeNode(3)
+    // queue.delete(DequeNode(3)) -> NoSuchElementException
+    @ParameterizedTest
+    @MethodSource("nodeOnListProvider")
+    void deleteNodeFromOtherList (DequeNode<Integer> node) {
+        queue.append(new DequeNode<>(1,null,null));
+        queue.append(new DequeNode<>(2,null,null));
+
+        var expectedException = NoSuchElementException.class;
+        Executable lambda = ()-> queue.delete(node);
+
+        assertThrows(expectedException,lambda);
+    }
+
+    // DoubleEndedQueue(DequeNode(1))
+    // queue.delete(DequeNode(1)) -> queue.size == 0
+    @Test
+    public void deleteRemovesElement() {
+        var one = 1;
+        var first = new DequeNode<>(one,null,null);
+        queue.append(first);
+
+        queue.delete(first);
+
+        assertAll(
+                ()-> {
+                    var obtained = queue.find(one);
+
+                    assertNull(obtained);
+                },
+                ()->{
+                    var obtained = queue.size();
+                    var expected = 0;
+
+                    assertEquals(expected,obtained);
+                }
+        );
+    }
     // DoubleEndedQueue(DequeNode(1))
     // find(1) -> DequeNode(1)
     @Test
