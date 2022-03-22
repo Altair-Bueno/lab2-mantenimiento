@@ -434,9 +434,11 @@ class DoubleEndedQueueTest {
     // find(1) -> DequeNode(1)
     @Test
     void findShouldReturnTheNodeWithTheGivenItem(){
-        DequeNode<Integer> expectedValue = new DequeNode<>(1, null, null);
+        DequeNode<Integer> node = new DequeNode<>(1, null, null);
+        DequeNode<Integer> expectedValue = new DequeNode<>(2, null, null);
+        queue.append(node);
         queue.append(expectedValue);
-        DequeNode<Integer> obtainedValue=queue.find(1);
+        DequeNode<Integer> obtainedValue=queue.find(2);
         assertEquals(expectedValue,obtainedValue);
     }
 
